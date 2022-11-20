@@ -1,4 +1,4 @@
-module shippy
+module github.com/173R/shippy/shippy-service-consignment
 
 go 1.19
 
