@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
+	pb "github.com/173R/shippy/shippy-service-consignment/proto/consignment"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
-	pb "shippy-service-consignment/proto/consignment"
 	"sync"
 )
 
