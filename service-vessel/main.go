@@ -54,7 +54,7 @@ const port = ":50052"
 func main() {
 	vessels := []*pb.Vessel{
 		&pb.Vessel{
-			Id:        "vessel001",
+			Id:        "vessel001asasas",
 			Name:      "Boaty McBoatface",
 			MaxWeight: 200000,
 			Capacity:  500,

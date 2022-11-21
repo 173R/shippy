@@ -7,7 +7,6 @@ import (
 	"sync"
 
 	pb "github.com/173R/shippy/service-consignment/proto/consignment"
-	//vesselProto "github.com/173R/shippy/service-vessel/proto/vessel"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
