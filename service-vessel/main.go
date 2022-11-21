@@ -2,14 +2,16 @@ package main
 
 import (
 	"context"
-	pb "github.com/173R/shippy/shippy-service-vessel/proto/vessel"
 	"log"
+
+	pb "github.com/173R/shippy/service-vessel/proto/vessel"
 
 	//"sync"
 	"errors"
+	"net"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"net"
 )
 
 type RepositoryI interface {

@@ -1,8 +1,8 @@
-module github.com/173R/shippy/shippy-service-vessel
+module github.com/173R/shippy/service-vessel
 
 go 1.19
 
-//replace github.com/173R/shippy/shippy-service-vessel => ../shippy-service-vessel
+//replace github.com/173R/shippy/service-vessel => ../service-vessel
 
 require (
 	google.golang.org/grpc v1.51.0

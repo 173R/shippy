@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "shippy/shippy-service-consignment/proto/consignment/consingment.proto";
+option go_package = "shippy/service-consignment/proto/consignment/consingment.proto";
 
 package consignment;
 

@@ -1,11 +1,11 @@
-module github.com/173R/shippy/shippy-cli-consignment
+module github.com/173R/shippy/cli-consignment
 
 go 1.19
 
-replace github.com/173R/shippy/shippy-service-consignment => ../shippy-service-consignment
+replace github.com/173R/shippy/service-consignment => ../service-consignment
 
 require (
-	github.com/173R/shippy/shippy-service-consignment v0.0.0-00010101000000-000000000000
+	github.com/173R/shippy/service-consignment v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.51.0
 )
 

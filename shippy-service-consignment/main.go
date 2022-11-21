@@ -6,8 +6,8 @@ import (
 	"net"
 	"sync"
 
-	pb "github.com/173R/shippy/shippy-service-consignment/proto/consignment"
-	vesselProto "github.com/173R/shippy/shippy-service-vessel/proto/vessel"
+	pb "github.com/173R/shippy/service-consignment/proto/consignment"
+	//vesselProto "github.com/173R/shippy/service-vessel/proto/vessel"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -38,8 +38,8 @@ func (repo *ConsignmentRepository) GetAll() []*pb.Consignment {
 }
 
 type service struct {
-	repo         RepositoryI
-	vesselClient vesselProto.VesselServiceClient
+	repo RepositoryI
+	//vesselClient vesselProto.VesselServiceClient
 	pb.UnimplementedShippingServiceServer
 }
 
