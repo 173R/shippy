@@ -1,3 +1,5 @@
+github.com/173R/shippy/service-consignment v0.0.0-20221121104014-e9df736b3f0a h1:0gqs69gymCIqYuGfGtDd+CsNCZlhvUoyyhJN4gxpYnA=
+github.com/173R/shippy/service-consignment v0.0.0-20221121104014-e9df736b3f0a/go.mod h1:HyHVkrOzS4k80w61LlyjIwTlCnDuGXiegzC4Sle9938=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
 github.com/golang/protobuf v1.5.2 h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw=
 github.com/golang/protobuf v1.5.2/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=

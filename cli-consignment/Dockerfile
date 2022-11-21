@@ -9,8 +9,9 @@ ENV GO111MODULE=on
 
 COPY . .
 
+RUN go mod tidy
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o service-consignment
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o cli-consignment
 
 # Run container
 FROM alpine:latest
@@ -19,6 +20,7 @@ RUN apk --no-cache add ca-certificates
 
 RUN mkdir /app
 WORKDIR /app
-COPY --from=builder /app/service-consignment .
+COPY --from=builder /app/consignment.json .
+COPY --from=builder /app/cli-consignment .
 
-CMD ["./service-consignment"]
+CMD ["./cli-consignment"]

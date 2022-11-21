@@ -9,8 +9,10 @@ ENV GO111MODULE=on
 
 COPY . .
 
+#RUN go env -w GOPRIVATE=github.com/173R/*
+RUN go mod tidy
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o service-consignment
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o service-vessel
 
 # Run container
 FROM alpine:latest
@@ -19,6 +21,6 @@ RUN apk --no-cache add ca-certificates
 
 RUN mkdir /app
 WORKDIR /app
-COPY --from=builder /app/service-consignment .
+COPY --from=builder /app/service-vessel .
 
-CMD ["./service-consignment"]
+CMD ["./service-vessel"]

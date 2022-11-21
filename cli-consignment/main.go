@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	address         = "localhost:50051"
-	defaultFilename = "consignment.json"
+	consignmentServicePort = ":50051"
+	defaultFilename        = "consignment.json"
 )
 
 // Парсим коносамент который хранится в json тут на клиенте
@@ -21,13 +21,16 @@ func parseFile(file string) (*pb.Consignment, error) {
 	if err != nil {
 		return nil, err
 	}
-	json.Unmarshal(data, &consignment)
+	if err := json.Unmarshal(data, &consignment); err != nil {
+		return nil, err
+	}
+
 	return consignment, err
 }
 
 func main() {
 	//Коннектимся к серверу
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	conn, err := grpc.Dial(consignmentServicePort, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Did not connect: %v", err)
 	}

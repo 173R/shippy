@@ -9,6 +9,7 @@ ENV GO111MODULE=on
 
 COPY . .
 
+#RUN go env -w GOPRIVATE=github.com/173R/*
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o service-consignment
 
