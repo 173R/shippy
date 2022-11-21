@@ -1,4 +1,4 @@
-module github.com/173R/shippy/service-vessel
+module github.com/173R/shippy/service-consignment
 
 go 1.19
 
