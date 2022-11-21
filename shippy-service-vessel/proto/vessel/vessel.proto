@@ -1,5 +1,8 @@
 syntax = "proto3";
 
+option go_package = "shippy/shippy-service-vessle/proto/vessle/vessle.proto";
+
+
 package vessel;
 
 service VesselService {
@@ -21,6 +24,6 @@ message Specification {
 }
 
 message Response {
-    Vessel vessel = 1
+    Vessel vessel = 1;
     repeated Vessel vessels = 2;
 }
