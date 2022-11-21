@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
-	pb "github.com/173R/shippy/shippy-service-consignment/proto/consignment"
+	pb "github.com/173R/shippy/service-consignment/proto/consignment"
 	"google.golang.org/grpc"
 	"log"
 	"os"
