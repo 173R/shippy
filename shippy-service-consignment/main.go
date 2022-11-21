@@ -2,28 +2,30 @@ package main
 
 import (
 	"context"
-	pb "github.com/173R/shippy/shippy-service-consignment/proto/consignment"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"sync"
+
+	pb "github.com/173R/shippy/shippy-service-consignment/proto/consignment"
+	vesselProto "github.com/173R/shippy/shippy-service-vessel/proto/vessel"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 const port = ":50051"
 
-type repository interface {
+type RepositoryI interface {
 	Create(*pb.Consignment) (*pb.Consignment, error)
 	GetAll() []*pb.Consignment
 }
 
-type Repository struct {
+type ConsignmentRepository struct {
 	mu           sync.RWMutex
 	consignments []*pb.Consignment
 }
 
 // Создание коносамента
-func (repo *Repository) Create(consignment *pb.Consignment) (*pb.Consignment, error) {
+func (repo *ConsignmentRepository) Create(consignment *pb.Consignment) (*pb.Consignment, error) {
 	repo.mu.Lock()
 	updated := append(repo.consignments, consignment)
 	repo.consignments = updated
@@ -31,12 +33,13 @@ func (repo *Repository) Create(consignment *pb.Consignment) (*pb.Consignment, er
 	return consignment, nil
 }
 
-func (repo *Repository) GetAll() []*pb.Consignment {
+func (repo *ConsignmentRepository) GetAll() []*pb.Consignment {
 	return repo.consignments
 }
 
 type service struct {
-	repo repository
+	repo         RepositoryI
+	vesselClient vesselProto.VesselServiceClient
 	pb.UnimplementedShippingServiceServer
 }
 
@@ -62,7 +65,7 @@ func (s *service) GetConsignments(
 }
 
 func main() {
-	repo := &Repository{}
+	repo := &ConsignmentRepository{}
 
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
