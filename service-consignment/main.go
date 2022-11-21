@@ -2,16 +2,17 @@ package main
 
 import (
 	"context"
+	pb "github.com/173R/shippy/service-consignment/proto/consignment"
+	vesselProto "github.com/173R/shippy/service-vessel/proto/vessel"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"sync"
-
-	pb "github.com/173R/shippy/service-consignment/proto/consignment"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 const port = ":50051"
+const vesselAddress = "localhost:50052"
 
 type RepositoryI interface {
 	Create(*pb.Consignment) (*pb.Consignment, error)
@@ -37,8 +38,8 @@ func (repo *ConsignmentRepository) GetAll() []*pb.Consignment {
 }
 
 type service struct {
-	repo RepositoryI
-	//vesselClient vesselProto.VesselServiceClient
+	repo         RepositoryI
+	vesselClient vesselProto.VesselServiceClient
 	pb.UnimplementedShippingServiceServer
 }
 
@@ -47,6 +48,20 @@ func (s *service) CreateConsignment(
 	ctx context.Context,
 	req *pb.Consignment,
 ) (*pb.Response, error) {
+	vesselResponse, err := s.vesselClient.FindAvailable(
+		context.Background(),
+		&vesselProto.Specification{
+			MaxWeight: req.Weight,
+			Capacity:  int32(len(req.Containers)),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	log.Printf("Found vessel: %s \n", vesselResponse.Vessel.Name)
+
+	req.VesselId = vesselResponse.Vessel.Id
+
 	consignment, err := s.repo.Create(req)
 	if err != nil {
 		return nil, err
@@ -72,7 +87,20 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterShippingServiceServer(grpcServer, &service{repo: repo})
+
+	//Создание клиента для сервера vessels
+	conn, err := grpc.Dial(vesselAddress, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Did not connect: %v", err)
+	}
+	defer conn.Close()
+
+	client := vesselProto.NewVesselServiceClient(conn)
+
+	pb.RegisterShippingServiceServer(grpcServer, &service{
+		repo:         repo,
+		vesselClient: client,
+	})
 
 	reflection.Register(grpcServer)
 
