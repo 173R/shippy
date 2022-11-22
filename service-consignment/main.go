@@ -12,7 +12,7 @@ import (
 )
 
 const port = ":50051"
-const vesselAddress = "localhost:50052"
+const vesselAddress = "vessel:50052"
 
 type RepositoryI interface {
 	Create(*pb.Consignment) (*pb.Consignment, error)

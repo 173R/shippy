@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	consignmentServicePort = ":50051"
+	//consignmentServiceAddr = "127.0.0.1:50051"
+	consignmentServiceAddr = "consignment:50051"
 	defaultFilename        = "consignment.json"
 )
 
@@ -30,7 +31,7 @@ func parseFile(file string) (*pb.Consignment, error) {
 
 func main() {
 	//Коннектимся к серверу
-	conn, err := grpc.Dial(consignmentServicePort, grpc.WithInsecure())
+	conn, err := grpc.Dial(consignmentServiceAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Did not connect: %v", err)
 	}

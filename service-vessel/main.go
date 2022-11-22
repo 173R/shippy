@@ -14,6 +14,8 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
+const port = ":50052"
+
 type RepositoryI interface {
 	FindAvailable(*pb.Specification) (*pb.Vessel, error)
 }
@@ -49,11 +51,9 @@ func (s *vesselService) FindAvailable(
 	return &pb.Response{Vessel: vessel}, nil
 }
 
-const port = ":50052"
-
 func main() {
 	vessels := []*pb.Vessel{
-		&pb.Vessel{
+		{
 			Id:        "vessel001asasas",
 			Name:      "Boaty McBoatface",
 			MaxWeight: 200000,
