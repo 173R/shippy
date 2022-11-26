@@ -5,8 +5,8 @@ services:
     restart: always
     build: ./service-consignment
     depends_on:
-      - datastore
       - vessel
+      - datastore
     ports:
       - 50051:50051
     environment:
@@ -21,6 +21,10 @@ services:
     environment:
       #MICRO_SERVER_ADDRESS: ":50051"
       BD_HOST: "mongodb://datastore:27017"
+
+  user:
+    build: ./shippy-service-user
+
 
   cli:
     build: ./cli-consignment
@@ -39,5 +43,12 @@ services:
       - 27017
     command: mongod --logpath=/dev/null
 
+  database:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: "admin"
+    ports:
+      - 5432:5432
 #networks:
 #  service_net:

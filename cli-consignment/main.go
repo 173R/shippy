@@ -7,6 +7,7 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"os"
+	"time"
 )
 
 const (
@@ -43,6 +44,8 @@ func main() {
 		file = os.Args[1]
 	}
 
+	time.Sleep(time.Second * 1)
+
 	consignment, err := parseFile(file)
 	if err != nil {
 		log.Fatalf("Could not parse file: %v", err)
@@ -57,7 +60,6 @@ func main() {
 	getAll, err := client.GetConsignments(
 		context.Background(), &pb.GetRequest{},
 	)
-
 	if err != nil {
 		log.Fatalf("Could not list consignments: %v", err)
 	}
